@@ -15,3 +15,36 @@ and open the template in the editor.
    width: 100%;
    text-align: center;
 }
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb
+{
+    background-color: #8c8c8c;
+    border-radius: 10px; 
+}
+[v-cloak] {display: none}
+input[type='checkbox'] { transform: scale(1.5); }
+.content-loader{
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #AAA;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto 0 auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

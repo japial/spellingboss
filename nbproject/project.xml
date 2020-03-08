@@ -10,7 +10,10 @@
             <word>endauth</word>
             <word>enderror</word>
             <word>endif</word>
+            <word>endpush</word>
+            <word>endsection</word>
             <word>img</word>
+            <word>validator</word>
         </spellchecker-wordlist>
     </configuration>
 </project>
