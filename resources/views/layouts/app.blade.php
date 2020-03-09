@@ -81,7 +81,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 footer">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="logo" style="width:75px;">
+                            <img src="{{ asset('assets/images/logo.png') }}" alt="logo" style="width:100px;">
                         </div>
                     </div>
                 </div>
@@ -91,6 +91,7 @@
         <script src="{{ asset('assets/lib/bootstrap/jquery-3.4.1.slim.min.js') }}"></script>
         <script src="{{ asset('assets/lib/bootstrap/popper.min.js') }}"></script>
         <script src="{{ asset('assets/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/lib/sweetalert.js') }}"></script>
         <script src="{{ asset('assets/lib/vue-dev.js') }}"></script>
         <script src="{{ asset('assets/lib/axios.min.js') }}"></script>
         @stack('scripts')

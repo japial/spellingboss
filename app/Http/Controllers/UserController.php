@@ -24,13 +24,14 @@ class UserController extends Controller
      * Display user manage page.
      *
      */
-    public function index()
+    public function manageUsers()
     {
         $user = Auth::user();
         if($user->user_type == 'admin'){
            return view('admin/users');
         }
         return redirect('home');
+        
     }
     
     /**
@@ -38,12 +39,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function allUsers()
+    public function index()
     {
         $users = User::select('id', 'name', 'email', 'user_type')->get();
         return  response($users);
     }
-
     
     /**
      * Store a newly created resource in storage.
@@ -66,7 +66,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return  response($user);
     }
 
     /**
@@ -78,7 +79,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        if( $request->email != $user->email){
+            $this->updateValidator($request->all())->validate();
+            $user->email = $request->email;
+        }
+        $user->name = $request->name;
+        if($request->password != ''){
+            $user->password = Hash::make($request->password);
+        }
+        $user->user_type = $request->user_type;
+        $user->save();
+        $users = User::select('id', 'name', 'email', 'user_type')->get();
+        return  response($users);
     }
 
     /**
@@ -89,7 +102,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        $users = User::select('id', 'name', 'email', 'user_type')->get();
+        return  response($users);
     }
     
     /**
@@ -103,7 +119,21 @@ class UserController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:6'],
+        ]);
+    }
+    
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function updateValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
     }
 

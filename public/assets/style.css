@@ -11,9 +11,10 @@ and open the template in the editor.
 .footer {
    position: fixed;
    left: 0;
-   bottom: 15px;
+   bottom: 0px;
    width: 100%;
-   text-align: center;
+   text-align: right;
+   padding: 25px;
 }
 ::-webkit-scrollbar-track
 {

@@ -22,7 +22,9 @@ Auth::routes(['register' => false]);
 Route::get('/home', 'HomeController@index')->name('home');
 //API Routes
 Route::prefix('admin')->group(function () {
-    Route::get('/users', 'UserController@index')->name('users');
-    Route::get('/all-users', 'UserController@allUsers');
-    Route::post('/users/store', 'UserController@store');
+    Route::get('/', 'HomeController@index');
+    Route::get('/manage-users', 'UserController@manageUsers')->name('manage.users');
+    Route::resource('users', 'UserController', [
+        'except' => ['show', 'create']
+    ]);
 });
