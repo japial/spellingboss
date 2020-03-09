@@ -24,7 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('admin')->group(function () {
     Route::get('/', 'HomeController@index');
     Route::get('/manage-users', 'UserController@manageUsers')->name('manage.users');
+    Route::get('/manage-words', 'WordController@index')->name('manage.words');
+    Route::get('/spellit-words', 'WordController@spellitWords')->name('spellit.words');
     Route::resource('users', 'UserController', [
+        'except' => ['show', 'create']
+    ]);
+    Route::resource('spellits', 'SpellitController', [
         'except' => ['show', 'create']
     ]);
 });

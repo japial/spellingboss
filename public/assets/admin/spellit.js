@@ -4,47 +4,46 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            usersData: false,
-            validationError: false,
-            errors: [],
-            userName: '',
-            userEmail: '',
-            userPassword: '',
-            userRole: 'speller',
-            allUsers: [],
+            wordsData: false,
+            vErrors: [],
+            word: '',
+            definition: '',
+            bangla: '',
+            sentence: '',
+            wordType: 'noun',
+            allWords: [],
             updateID: 0,
         };
     },
     mounted: function () {
-        this.getAllUsers();
+        this.getAllWords();
     },
     methods: {
-        getAllUsers() {
-            this.usersData = false;
-            axios.get('/admin/users').then(response => {
-                this.allUsers = response.data;
+        getAllWords() {
+            this.wordsData = false;
+            axios.get('/admin/spellits').then(response => {
+                this.allWords = response.data;
             }).catch(error => {
                 console.log(error);
-            }).finally(() => this.usersData = true);
+            }).finally(() => this.wordsData = true);
         },
-        createNewUser() {
-            axios.post('/admin/users', {
-                name: this.userName,
-                email: this.userEmail,
-                password: this.userPassword,
-                user_type: this.userRole
-            }
-            ).then(response => {
-                this.resetUserFormData();
-                this.allUsers.push(response.data);
-                $('#addUserModal').modal('toggle');
-                this.successAlert('User Created!');
+        createWord() {
+            axios.post('/admin/spellits', {
+                word: this.word,
+                definition: this.definition,
+                bangla: this.bangla,
+                sentence: this.sentence,
+                type: this.wordType
+            }).then(response => {
+                this.resetWordFormData();
+                this.allWords.push(response.data);
+                $('#wordModal').modal('toggle');
+                this.successAlert('Word Created!');
             }).catch(error => {
-                this.validationError = true;
-                this.errors = error.response.data.errors;
+                this.vErrors = error.response.data.errors;
             });
         },
-        editUser(userID) {
+        editWord(userID) {
             this.updateID = userID;
             axios.get('/admin/users/' + userID + '/edit').then(response => {
                 if (response.data) {
@@ -56,7 +55,7 @@ const app = new Vue({
                 console.log(error);
             });
         },
-        updateUserInfo() {
+        updateWord() {
             axios.put('/admin/users/' + this.updateID, {
                 name: this.userName,
                 email: this.userEmail,
@@ -68,12 +67,11 @@ const app = new Vue({
                 }
                 $('#editUserModal').modal('toggle');
                 this.successAlert('User Updated!');
-                this.resetUserFormData();
             }).catch(error => {
                 console.log(error);
             });
         },
-        deleteUser(userID) {
+        deleteWord(userID) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -81,7 +79,7 @@ const app = new Vue({
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
+                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.value) {
                     axios.delete('/admin/users/' + userID).then(response => {
@@ -95,13 +93,14 @@ const app = new Vue({
                 }
             });
         },
-        resetUserFormData() {
-            this.userName = '';
-            this.userEmail = '';
-            this.userPassword = '';
-            this.userRole = 'speller';
+        resetWordFormData() {
+            this.word = '';
+            this.definition = '';
+            this.bangla = '';
+            this.sentence = '';
+            this.wordType = 'noun';
             this.validationError = false;
-            this.errors = [];
+            this.vErrors = false;
             this.updateID = 0;
         },
         showValidationError(errorField = '') {
@@ -122,5 +121,6 @@ const app = new Vue({
                 timer: 1500
             });
         }
+        
     }
 });

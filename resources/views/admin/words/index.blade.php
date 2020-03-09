@@ -5,13 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">Admin Dashboard</div>
+                <div class="card-header text-center">Manage Words</div>
                 <div class="card-body">
-                    <a href="{{ route('manage.users') }}" class="btn btn-primary">Manage Users</a>
-                    <a href="{{ route('manage.words') }}" class="btn btn-success">Manage Words</a>
+                    <a href="{{ route('spellit.words') }}" class="btn btn-success">Spell it Words</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
