@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/spellit-words', 'WordController@spellitWords')->name('spellit.words');
         Route::get('/spellit-game', 'GameController@spellitGame')->name('game.spellit');
         Route::get('/game-rounds', 'GameController@rounds')->name('game.rounds');
+        Route::get('/spelluser-info', 'GameController@spellUserInfo');
         Route::resource('users', 'UserController', [
             'except' => ['show', 'create', 'edit']
         ]);
@@ -36,6 +37,9 @@ Route::prefix('admin')->group(function () {
             'except' => ['show', 'create', 'edit']
         ]);
         Route::resource('rounds', 'RoundController', [
+            'except' => ['show', 'create', 'edit']
+        ]);
+        Route::resource('spellusers', 'SpelluserController', [
             'except' => ['show', 'create', 'edit']
         ]);
     });

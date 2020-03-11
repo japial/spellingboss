@@ -9,4 +9,9 @@ class Round extends Model
     protected $fillable = [
         'name', 'finished'
     ];
+    
+    public function spelluser()
+    {
+        return $this->hasMany('App\Spelluser');
+    }
 }
