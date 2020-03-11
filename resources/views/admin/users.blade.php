@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong class="float-left"> List of Users</strong>
-                    <button class="btn btn-dark float-right" data-toggle="modal" data-target="#addUserModal">
+                    <button class="btn btn-dark float-right" data-toggle="modal" data-target="#addUserModal" @click="resetUserFormData">
                         Add User
                     </button>
                 </div>

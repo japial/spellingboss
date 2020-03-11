@@ -7,7 +7,8 @@
             <div class="card">
                 <div class="card-header text-center">Games</div>
                 <div class="card-body">
-                    <a href="{{ route('manage.users') }}" class="btn btn-info">Spell It Game</a>
+                    <a href="{{ route('game.rounds') }}" class="btn btn-info">Rounds</a>
+                    <a href="{{ route('game.spellit') }}" class="btn btn-info">Spell It Game</a>
                 </div>
             </div>
         </div>

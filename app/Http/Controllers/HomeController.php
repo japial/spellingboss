@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         if($user->user_type == 'admin'){
-            return view('admin/index');
+            return view('admin.index');
         }
         return view('home');
     }

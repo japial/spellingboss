@@ -6,9 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <strong class="float-left"> Spell It Words</strong>
-                    <button class="btn btn-dark float-right" data-toggle="modal" data-target="#wordModal" @click="resetWordFormData">
-                        Add Word
+                    <strong class="float-left"> Spell It Game</strong>
+                    <button class="btn btn-dark float-right" data-toggle="modal" data-target="#wordModal">
+                        Add User Word
                     </button>
                 </div>
                 <div class="card-body">
@@ -48,7 +48,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="wordModalTitle">Create New Word</h5>
+                <h5 class="modal-title">Word</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -100,5 +100,6 @@
 @push('scripts')
 <script src="{{ asset('assets/admin/spellit.js') }}"></script>
 @endpush
+
 
 

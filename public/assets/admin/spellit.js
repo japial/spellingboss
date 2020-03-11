@@ -99,7 +99,6 @@ const app = new Vue({
             this.bangla = '';
             this.sentence = '';
             this.wordType = 'noun';
-            this.validationError = false;
             this.vErrors = false;
             this.updateID = 0;
         },

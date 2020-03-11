@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Spellit extends Model
+class Round extends Model
 {
     protected $fillable = [
-        'word', 'definition', 'bangla', 'sentence', 'type'
+        'name', 'finished'
     ];
 }

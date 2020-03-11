@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class WordController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     
     /**
      * Display words manage page.
@@ -21,7 +17,7 @@ class WordController extends Controller
     {
         $user = Auth::user();
         if($user->user_type == 'admin'){
-           return view('admin/words/index');
+           return view('admin.words.index');
         }
         return redirect('home');
     }
@@ -34,7 +30,7 @@ class WordController extends Controller
     {
         $user = Auth::user();
         if($user->user_type == 'admin'){
-           return view('admin/words/spellit');
+           return view('admin.words.spellit');
         }
         return redirect('home');
     }

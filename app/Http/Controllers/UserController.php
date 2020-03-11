@@ -10,15 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     
     /**
      * Display user manage page.
@@ -28,7 +19,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if($user->user_type == 'admin'){
-           return view('admin/users');
+           return view('admin.users');
         }
         return redirect('home');
         
