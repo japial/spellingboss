@@ -44,17 +44,14 @@ const app = new Vue({
                 this.errors = error.response.data.errors;
             });
         },
-        editUser(userID) {
-            this.updateID = userID;
-            axios.get('/admin/users/' + userID + '/edit').then(response => {
-                if (response.data) {
-                    this.userName = response.data.name;
-                    this.userEmail = response.data.email;
-                    this.userRole = response.data.user_type;
-                }
-            }).catch(error => {
-                console.log(error);
-            });
+        editUser(index) {
+            let updateData = this.allUsers[index];
+            if(updateData){
+                this.updateID = updateData.id;
+                this.userName = updateData.name;
+                this.userEmail = updateData.email;
+                this.userRole = updateData.user_type;
+            }
         },
         updateUserInfo() {
             axios.put('/admin/users/' + this.updateID, {

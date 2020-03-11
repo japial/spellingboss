@@ -10,6 +10,7 @@
             <word>csrf</word>
             <word>endauth</word>
             <word>enderror</word>
+            <word>endguest</word>
             <word>endif</word>
             <word>endpush</word>
             <word>endsection</word>

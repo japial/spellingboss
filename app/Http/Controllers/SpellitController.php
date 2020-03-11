@@ -43,28 +43,6 @@ class SpellitController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Spellit  $spellit
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Spellit $spellit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Spellit  $spellit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Spellit $spellit)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,7 +51,17 @@ class SpellitController extends Controller
      */
     public function update(Request $request, Spellit $spellit)
     {
-        //
+        if($spellit->word != $request->word){
+            $this->validator($request->all())->validate();
+            $spellit->word = $request->word;
+        }
+        $spellit->definition = $request->definition;
+        $spellit->bangla = $request->bangla;
+        $spellit->sentence = $request->sentence;
+        $spellit->type = $request->type;
+        $spellit->save();
+        $words = Spellit::select('id', 'word', 'definition', 'bangla', 'sentence', 'type')->get();
+        return  response($words);
     }
 
     /**
@@ -84,7 +72,9 @@ class SpellitController extends Controller
      */
     public function destroy(Spellit $spellit)
     {
-        //
+        $spellit->delete();
+        $words = Spellit::select('id', 'word', 'definition', 'bangla', 'sentence', 'type')->get();
+        return  response($words);
     }
     
     /**
@@ -97,23 +87,6 @@ class SpellitController extends Controller
     {
         return Validator::make($data, [
             'word' => ['required', 'string', 'max:255', 'unique:spellits'],
-            'definition' => ['required', 'string', 'max:255'],
-            'bangla' => ['required', 'string', 'max:255'],
-            'sentence' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', 'max:255'],
-        ]);
-    }
-    
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function updateValidator(array $data)
-    {
-        return Validator::make($data, [
-            'word' => ['required', 'string', 'max:255'],
             'definition' => ['required', 'string', 'max:255'],
             'bangla' => ['required', 'string', 'max:255'],
             'sentence' => ['required', 'string', 'max:255'],

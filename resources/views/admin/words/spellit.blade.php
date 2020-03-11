@@ -33,7 +33,7 @@
                                 <td v-text="spell.type"></td>
                                 <td>
                                     <button class="btn btn-warning" data-toggle="modal" data-target="#wordModal" 
-                                            @click="editWord(spell.id)">Edit</button>
+                                            @click="editWord(index)">Edit</button>
                                     <button class="btn btn-danger ml-2" @click="deleteWord(spell.id)">Delete</button>
                                 </td>
                             </tr>

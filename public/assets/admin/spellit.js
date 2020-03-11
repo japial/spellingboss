@@ -12,7 +12,7 @@ const app = new Vue({
             sentence: '',
             wordType: 'noun',
             allWords: [],
-            updateID: 0,
+            updateID: 0
         };
     },
     mounted: function () {
@@ -43,35 +43,35 @@ const app = new Vue({
                 this.vErrors = error.response.data.errors;
             });
         },
-        editWord(userID) {
-            this.updateID = userID;
-            axios.get('/admin/users/' + userID + '/edit').then(response => {
-                if (response.data) {
-                    this.userName = response.data.name;
-                    this.userEmail = response.data.email;
-                    this.userRole = response.data.user_type;
-                }
-            }).catch(error => {
-                console.log(error);
-            });
+        editWord(index) {
+            let updateData = this.allWords[index];
+            if (updateData) {
+                this.updateID = updateData.id;
+                this.word = updateData.word;
+                this.definition = updateData.definition;
+                this.bangla = updateData.bangla;
+                this.sentence = updateData.sentence;
+                this.wordType = updateData.type;
+            }
         },
         updateWord() {
-            axios.put('/admin/users/' + this.updateID, {
-                name: this.userName,
-                email: this.userEmail,
-                password: this.userPassword,
-                user_type: this.userRole
+            axios.put('/admin/spellits/' + this.updateID, {
+                word: this.word,
+                definition: this.definition,
+                bangla: this.bangla,
+                sentence: this.sentence,
+                type: this.wordType
             }).then(response => {
                 if (response.data) {
-                    this.allUsers = response.data;
+                    this.allWords = response.data;
                 }
-                $('#editUserModal').modal('toggle');
-                this.successAlert('User Updated!');
+                $('#wordModal').modal('toggle');
+                this.successAlert('Word Updated!');
             }).catch(error => {
                 console.log(error);
             });
         },
-        deleteWord(userID) {
+        deleteWord(wordID) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -82,11 +82,11 @@ const app = new Vue({
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.value) {
-                    axios.delete('/admin/users/' + userID).then(response => {
+                    axios.delete('/admin/spellits/' + wordID).then(response => {
                         if (response.data) {
-                            this.allUsers = response.data;
+                            this.allWords = response.data;
                         }
-                        this.successAlert('User Deleted!');
+                        this.successAlert('Word Deleted!');
                     }).catch(error => {
                         console.log(error);
                     });

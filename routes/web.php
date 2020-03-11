@@ -27,9 +27,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/manage-words', 'WordController@index')->name('manage.words');
     Route::get('/spellit-words', 'WordController@spellitWords')->name('spellit.words');
     Route::resource('users', 'UserController', [
-        'except' => ['show', 'create']
+        'except' => ['show', 'create', 'edit']
     ]);
     Route::resource('spellits', 'SpellitController', [
-        'except' => ['show', 'create']
+        'except' => ['show', 'create', 'edit']
     ]);
 });

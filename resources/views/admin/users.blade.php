@@ -29,7 +29,7 @@
                                 <td v-text="user.user_type.toUpperCase()"></td>
                                 <td>
                                     <button class="btn btn-warning" data-toggle="modal" data-target="#editUserModal" 
-                                            @click="editUser(user.id)">Edit</button>
+                                            @click="editUser(index)">Edit</button>
                                     <button class="btn btn-danger ml-2" @click="deleteUser(user.id)">Delete</button>
                                 </td>
                             </tr>

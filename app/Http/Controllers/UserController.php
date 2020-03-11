@@ -58,17 +58,6 @@ class UserController extends Controller
         return response($this->create($userData));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::find($id);
-        return  response($user);
-    }
 
     /**
      * Update the specified resource in storage.
