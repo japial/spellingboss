@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpellusersTable extends Migration
+class CreateSpellwordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateSpellusersTable extends Migration
      */
     public function up()
     {
-        Schema::create('spellusers', function (Blueprint $table) {
+        Schema::create('spellwords', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('round_id');
-            $table->tinyInteger('played');
+            $table->integer('spelluser_id');
+            $table->integer('spellit_id');
+            $table->tinyInteger('correct')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateSpellusersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spellusers');
+        Schema::dropIfExists('spellwords');
     }
 }

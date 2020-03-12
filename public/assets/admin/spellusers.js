@@ -21,7 +21,6 @@ const app = new Vue({
             user: 0,
             round: 0,
             spellWords: [],
-            correct: 0,
             reqUrl: '/admin/spellusers'
         };
     },
@@ -51,7 +50,7 @@ const app = new Vue({
             axios.post(this.reqUrl, {
                 user : this.user ,
                 round : this.round ,
-                word: this.word 
+                word: this.spellWords 
             }).then(response => {
                 this.resetFormData();
                 this.allData = response.data;
@@ -67,16 +66,16 @@ const app = new Vue({
                 this.updateID = updateData.id;
                 this.user = updateData.user_id;
                 this.round = updateData.round_id;
-                this.word = updateData.spellit_id;
-                this.correct = updateData.correct;
+                for(let k in updateData.words){
+                    this.spellWords.push(updateData.words[k].details.id);
+                }
             }
         },
         updateData() {
             axios.put(this.reqUrl + '/' +this.updateID, {
                 user : this.user ,
                 round : this.round ,
-                word: this.word, 
-                correct: this.correct 
+                word: this.spellWords
             }).then(response => {
                 this.resetFormData();
                 if(response.data) {
@@ -111,10 +110,9 @@ const app = new Vue({
             });
         },
         resetFormData() {
-            this.user_id = 0;
-            this.round_id = 0;
-            this.spellit_id = 0;
-            this.correct = 0;
+            this.user = 0;
+            this.round = 0;
+            this.spellWords = [];
             this.vErrors = false;
             this.updateID = 0;
         },

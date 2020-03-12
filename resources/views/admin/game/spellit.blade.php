@@ -24,10 +24,14 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in allData" :key="index">
-                                <td v-text="item.name"></td>
+                                <td v-text="item.speller"></td>
+                                <td v-text="item.round"></td>
                                 <td>
-                                    <span v-if="item.finished == 1" class="badge badge-success">YES</span>
-                                    <span v-else class="badge badge-info">NO</span>
+                                    <strong v-for="(spword, index) in item.words" :key="index">
+                                        <span v-if="spword.correct" class="badge badge-success ml-2"  v-text="spword.details.word"></span>
+                                        <span v-else class="badge badge-light ml-2"  v-text="spword.details.word"></span>
+                                    </strong>
+                                    
                                 </td>
                                 <td>
                                     <button class="btn btn-warning" data-toggle="modal" data-target="#dataModal" 
@@ -55,39 +59,24 @@
                 <div class="form-group">
                     <label>Round</label>
                     <select v-model="round"  class="form-control">
-                        <option v-for="(user, index) in rounds" :key="index" :value="round.id" v-text="round.name"></option>
+                        <option value="0">Select Round</option>
+                        <option v-for="(item, index) in rounds" :key="index" :value="item.id" v-text="item.name"></option>
                     </select>
                     <div v-html="showValidationError(vErrors.round)"></div>
                 </div>
                 <div class="form-group">
                     <label>Spellers</label>
                     <select v-model="user"  class="form-control">
-                        <option v-for="(user, index) in spellers" :key="index" :value="user.id" v-text="user.name"></option>
+                        <option value="0">Select Speller</option>
+                        <option v-for="(item, index) in spellers" :key="index" :value="item.id" v-text="item.name"></option>
                     </select>
                     <div v-html="showValidationError(vErrors.user)"></div>
                 </div>
                 <div class="form-group">
                     <label>Words</label>
                     <select multiple class="form-control"  v-model="spellWords" >
-                        <option v-for="(sword, index) in words" :key="index"  v-text="sword.word"></option>
+                        <option v-for="(sword, index) in words" :key="index" :value="sword.id"  v-text="sword.word"></option>
                     </select>
-                </div>
-                <div class="row" v-if="updateID">
-                    <div class="col">
-                        <h6>Correct:</h6>
-                    </div>
-                    <div class="col">
-                        <div class="form-radio">
-                            <input type="radio" class="form-radio-input" v-model="correct" name="role" value="0">
-                            <label class="form-radio-label">No</label>
-                        </div>
-                    </div>   
-                    <div class="col">
-                        <div class="form-radio">
-                            <input type="radio" class="form-radio-input" v-model="correct" name="role" value="1">
-                            <label class="form-radio-label">YES</label>
-                        </div>
-                    </div>     
                 </div>
             </div>
             <div class="modal-footer">

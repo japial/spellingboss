@@ -20,8 +20,8 @@ class Spelluser extends Model
         return $this->belongsTo('App\Round');
     }
     
-    public function spellit()
+    public function spellwords()
     {
-        return $this->belongsTo('App\Spellit');
+        return $this->hasMany('App\Spellword');
     }
 }
