@@ -67,8 +67,8 @@ class SpelluserController extends Controller {
 
     private function createSpellUser($data) {
         return Spelluser::create([
-                    'user_id' => $data['user'],
-                    'round_id' => $data['round'],
+            'user_id' => $data['user'],
+            'round_id' => $data['round']
         ]);
     }
     

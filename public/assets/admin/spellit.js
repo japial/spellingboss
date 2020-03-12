@@ -1,125 +1,79 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
 /* global axios, Swal */
 
 const app = new Vue({
     el: '#app',
     data() {
         return {
-            wordsData: false,
-            vErrors: [],
-            word: '',
-            definition: '',
-            bangla: '',
-            sentence: '',
-            wordType: 'noun',
-            allWords: [],
-            updateID: 0
+            dataLoaded: false,
+            speller: '',
+            round: '',
+            words: [],
+            timer: null,
+            totalTime: 60,
+            resetButton: false,
+            selectedWord: 0
         };
     },
     mounted: function () {
-        this.getAllWords();
+        this.getSpellersWords();
     },
     methods: {
-        getAllWords() {
-            this.wordsData = false;
-            axios.get('/admin/spellits').then(response => {
-                this.allWords = response.data;
+        getSpellersWords() {
+            this.dataLoaded = false;
+            axios.get('/admin/spellit-game-info/' + spellUserID).then(response => {
+                this.speller = response.data.speller;
+                this.words = response.data.words;
+                this.round = response.data.round;
             }).catch(error => {
                 console.log(error);
-            }).finally(() => this.wordsData = true);
+            }).finally(this.dataLoaded = true);
         },
-        createWord() {
-            axios.post('/admin/spellits', {
-                word: this.word,
-                definition: this.definition,
-                bangla: this.bangla,
-                sentence: this.sentence,
-                type: this.wordType
-            }).then(response => {
-                this.resetWordFormData();
-                this.allWords.push(response.data);
-                $('#wordModal').modal('toggle');
-                this.successAlert('Word Created!');
-            }).catch(error => {
-                this.vErrors = error.response.data.errors;
-            });
+        startTimer: function () {
+            this.timer = setInterval(() => this.countdown(), 1000);
+            this.resetButton = true;
+            this.title = "Greatness is within sight!!"
         },
-        editWord(index) {
-            let updateData = this.allWords[index];
-            if (updateData) {
-                this.updateID = updateData.id;
-                this.word = updateData.word;
-                this.definition = updateData.definition;
-                this.bangla = updateData.bangla;
-                this.sentence = updateData.sentence;
-                this.wordType = updateData.type;
+        stopTimer: function () {
+            clearInterval(this.timer);
+            this.timer = null;
+            this.resetButton = true;
+            this.title = "Never quit, keep going!!"
+        },
+        resetTimer: function () {
+            this.totalTime = 60;
+            clearInterval(this.timer);
+            this.timer = null;
+            this.resetButton = false;
+            this.title = "Let the countdown begin!!"
+        },
+        padTime: function (time) {
+            return (time < 10 ? '0' : '') + time;
+        },
+        countdown: function () {
+            if (this.totalTime >= 1) {
+                this.totalTime--;
+            } else {
+                this.totalTime = 0;
+                this.resetTimer()
             }
-        },
-        updateWord() {
-            axios.put('/admin/spellits/' + this.updateID, {
-                word: this.word,
-                definition: this.definition,
-                bangla: this.bangla,
-                sentence: this.sentence,
-                type: this.wordType
-            }).then(response => {
-                if (response.data) {
-                    this.allWords = response.data;
-                }
-                $('#wordModal').modal('toggle');
-                this.successAlert('Word Updated!');
-            }).catch(error => {
-                console.log(error);
-            });
-        },
-        deleteWord(wordID) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value) {
-                    axios.delete('/admin/spellits/' + wordID).then(response => {
-                        if (response.data) {
-                            this.allWords = response.data;
-                        }
-                        this.successAlert('Word Deleted!');
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                }
-            });
-        },
-        resetWordFormData() {
-            this.word = '';
-            this.definition = '';
-            this.bangla = '';
-            this.sentence = '';
-            this.wordType = 'noun';
-            this.vErrors = false;
-            this.updateID = 0;
-        },
-        showValidationError(errorField = '') {
-            let errorElement = '';
-            if (errorField.length) {
-                for (let k in errorField) {
-                    errorElement += `<small class="form-text text-danger d-block p-1">${errorField[k]}</small>`;
-                }
-            }
-            return errorElement;
-        },
-        successAlert(message = '') {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500
-            });
         }
-        
+    },
+    computed: {
+        minutes: function () {
+            const minutes = Math.floor(this.totalTime / 60);
+            return this.padTime(minutes);
+        },
+        seconds: function () {
+            const seconds = this.totalTime - (this.minutes * 60);
+            return this.padTime(seconds);
+        }
     }
+
 });

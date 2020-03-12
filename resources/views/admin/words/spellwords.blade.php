@@ -98,7 +98,7 @@
 </div>
 @endsection
 @push('scripts')
-<script src="{{ asset('assets/admin/spellit.js') }}"></script>
+<script src="{{ asset('assets/admin/spellwords.js') }}"></script>
 @endpush
 
 

@@ -30,7 +30,7 @@ class WordController extends Controller
     {
         $user = Auth::user();
         if($user->user_type == 'admin'){
-           return view('admin.words.spellit');
+           return view('admin.words.spellwords');
         }
         return redirect('home');
     }
