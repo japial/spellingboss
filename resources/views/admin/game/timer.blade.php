@@ -7,7 +7,7 @@
     <!--     Start TImer -->
     <button 
         id="start" 
-        class="btn btn-primary" 
+        class="btn btn-info" 
         v-if="!timer"
         @click="startTimer">
         Play
@@ -23,7 +23,7 @@
     <!--     Restart Timer -->
     <button 
         id="reset" 
-        class="btn btn-danger" 
+        class="btn btn-secondary" 
         v-if="resetButton"
         @click="resetTimer">
         Restart

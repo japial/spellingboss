@@ -27,7 +27,8 @@
                             @include('admin.game.timer')
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-success mt-2 float-right">Complete</button>
+                            <button class="btn btn-success mt-2 float-left">Correct</button>
+                            <button class="btn btn-danger mt-2 float-right">Wrong</button>
                         </div>
                     </div>
                     <div class="row">
